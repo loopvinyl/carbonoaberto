@@ -22,7 +22,7 @@ with col2:
     st.metric("💵 Receita estimada (USD)", f"US$ {receita_usd:,.2f}")
 
 # === Gráfico de Emissões Mensais ===
-st.subheader("📅 Emissões Mensais por Mês/Ano")
+st.subheader("📅 Emissões Evitadas por Mês/Ano")
 df_mensal_plot = df_mensal.copy()
 df_mensal_plot["Mes"] = df_mensal_plot["Mes"].astype(str).str.zfill(2)
 df_mensal_plot["AnoMes"] = df_mensal_plot["Ano"].astype(str) + "-" + df_mensal_plot["Mes"]
