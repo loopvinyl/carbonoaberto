@@ -2,11 +2,11 @@ import pandas as pd
 import streamlit as st
 
 # === Carrega os dados exportados ===
-arquivo = "/content/emissoes_resultado.xlsx"
+arquivo = "emissoes_resultado.xlsx"  # caminho relativo para funcionar no Streamlit Cloud
 df_mensal = pd.read_excel(arquivo, sheet_name="Mensal")
 df_anual = pd.read_excel(arquivo, sheet_name="Anual")
 
-# === Título ===
+# === Configuração da página ===
 st.set_page_config(page_title="Dashboard de Emissões", layout="wide")
 st.title("📊 Dashboard de Emissões e Créditos de Carbono")
 
