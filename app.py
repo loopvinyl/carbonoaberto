@@ -30,37 +30,12 @@ df_mensal_plot = df_mensal_plot.sort_values("AnoMes")
 st.line_chart(df_mensal_plot.set_index("AnoMes")["Emission Reductions (tCO2e)"])
 
 # === Gráfico de Emissões Anuais ===
-#st.subheader("Emissões Evitadas em tCO2e por Ano, com decaimento")
-#df_anual_plot = df_anual[df_anual["Ano"].apply(lambda x: str(x).isdigit())]
-#df_anual_plot = df_anual_plot.sort_values("Ano")
-#st.bar_chart(df_anual_plot.set_index("Ano")["Emission Reductions (tCO2e)"])
-##
-import altair as alt
-
 st.subheader("Emissões Evitadas em tCO2e por Ano, com decaimento")
-
 df_anual_plot = df_anual[df_anual["Ano"].apply(lambda x: str(x).isdigit())]
 df_anual_plot = df_anual_plot.sort_values("Ano")
+st.bar_chart(df_anual_plot.set_index("Ano")["Emission Reductions (tCO2e)"])
+##
 
-# Cria coluna formatada
-df_anual_plot["ValorFormatado"] = df_anual_plot["Emission Reductions (tCO2e)"].apply(
-    lambda x: f"{x:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
-)
-
-# Gráfico de barras com tooltip formatado
-grafico = alt.Chart(df_anual_plot).mark_bar().encode(
-    x=alt.X("Ano:O", title="Ano"),
-    y=alt.Y("Emission Reductions (tCO2e):Q", title="Emissões Evitadas (tCO2e)"),
-    tooltip=[
-        alt.Tooltip("Ano:N", title="Ano"),
-        alt.Tooltip("ValorFormatado:N", title="Emissões (tCO2e)")
-    ]
-).properties(
-    use_container_width=True,
-    height=400
-)
-
-st.altair_chart(grafico, use_container_width=True)
 
 ##
 # === Fonte de dados ===
