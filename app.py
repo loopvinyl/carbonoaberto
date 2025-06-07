@@ -30,12 +30,11 @@ df_mensal_plot = df_mensal_plot.sort_values("AnoMes")
 st.line_chart(df_mensal_plot.set_index("AnoMes")["Emission Reductions (tCO2e)"])
 
 # === Gráfico de Emissões Anuais ===
-st.subheader("Emissões Evitadas em tCO2e por Ano, com decaimento")
+st.subheader("Emissõess Evitadas em tCO2e por Ano, com decaimento")
 df_anual_plot = df_anual[df_anual["Ano"].apply(lambda x: str(x).isdigit())]
 df_anual_plot = df_anual_plot.sort_values("Ano")
 st.bar_chart(df_anual_plot.set_index("Ano")["Emission Reductions (tCO2e)"])
 
-##
 
 ##
 # === Fonte de dados ===
