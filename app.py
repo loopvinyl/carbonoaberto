@@ -34,8 +34,8 @@ st.subheader("Emissões Evitadas em tCO2e por Ano, com decaimento")
 df_anual_plot = df_anual[df_anual["Ano"].apply(lambda x: str(x).isdigit())]
 df_anual_plot = df_anual_plot.sort_values("Ano")
 st.bar_chart(df_anual_plot.set_index("Ano")["Emission Reductions (tCO2e)"])
-##
 
+##
 
 ##
 # === Fonte de dados ===
