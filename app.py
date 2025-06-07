@@ -22,13 +22,60 @@ with col2:
     st.metric("💰 Receita total com Créditos de Carbono (USD)", f"US$ {receita_usd:,.2f}")
 
 # === Gráfico de Emissões Mensais ===
+#st.subheader("Emissões Evitadas em tCO2e por mês, sem decaimento")
+#df_mensal_plot = df_mensal.copy()
+#df_mensal_plot["Mes"] = df_mensal_plot["Mes"].astype(str).str.zfill(2)
+#df_mensal_plot["AnoMes"] = df_mensal_plot["Ano"].astype(str) + "-" + df_mensal_plot["Mes"]
+#df_mensal_plot = df_mensal_plot.sort_values("AnoMes")
+#st.line_chart(df_mensal_plot.set_index("AnoMes")["Emission Reductions (tCO2e)"])
+#
+
+# === Gráfico de Emissões Mensais ===
 st.subheader("Emissões Evitadas em tCO2e por mês, sem decaimento")
+
+# Pré-processamento dos dados
 df_mensal_plot = df_mensal.copy()
 df_mensal_plot["Mes"] = df_mensal_plot["Mes"].astype(str).str.zfill(2)
 df_mensal_plot["AnoMes"] = df_mensal_plot["Ano"].astype(str) + "-" + df_mensal_plot["Mes"]
 df_mensal_plot = df_mensal_plot.sort_values("AnoMes")
-st.line_chart(df_mensal_plot.set_index("AnoMes")["Emission Reductions (tCO2e)"])
 
+# Formatação brasileira para os valores
+df_mensal_plot = df_mensal_plot.copy()
+df_mensal_plot["Emissões Formatadas"] = df_mensal_plot["Emission Reductions (tCO2e)"].apply(
+    lambda x: f"{x:,.0f}".replace(",", ".").replace(".", ",", 1)
+)
+
+# Criar o gráfico de linha com Altair
+chart = alt.Chart(df_mensal_plot).mark_line(point=True).encode(
+    x=alt.X('AnoMes:N', title='Mês/Ano', axis=alt.Axis(labelAngle=45)),
+    y=alt.Y('Emission Reductions (tCO2e):Q', title='Emissões Evitadas (tCO₂e)',
+            axis=alt.Axis(format='.0f', labelExpr="replace(datum.label, /\\B(?=(\\d{3})+(?!\\d))/g, '.')"))
+).properties(
+    width=700,
+    height=400
+)
+
+# Adicionar pontos com tooltip
+points = chart.mark_point().encode(
+    tooltip=[
+        alt.Tooltip('AnoMes:N', title='Período'),
+        alt.Tooltip('Emission Reductions (tCO2e):Q', title='Emissões', format='.0f')
+    ]
+)
+
+# Adicionar rótulos nos pontos
+text = chart.mark_text(
+    align='left',
+    baseline='bottom',
+    dx=5,
+    dy=-5
+).encode(
+    text=alt.Text('Emissões Formatadas:N')
+)
+
+st.altair_chart((chart + points + text), use_container_width=True)
+
+#
 # === Gráfico de Emissões Anuais ===
 #st.subheader("Emissões Evitadas em tCO2e por Ano, com decaimento")
 #df_anual_plot = df_anual[df_anual["Ano"].apply(lambda x: str(x).isdigit())]
