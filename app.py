@@ -36,4 +36,4 @@ df_anual_plot = df_anual_plot.sort_values("Ano")
 st.bar_chart(df_anual_plot.set_index("Ano")["Emission Reductions (tCO2e)"])
 
 # === Fonte de dados ===
-st.caption("Dados baseados em emissões de resíduos de poda destinados à compostagem (2019-2022), contido no conjunto de dados abertos disponíveis no seguinte link: https://dados.gov.br/dados/conjuntos-dados/destinacao-de-residuos-solidos.")
+st.caption("Dados baseados em emissões de resíduos de poda destinados à compostagem (2019-2022), extraídos de dados abertos disponíveis no seguinte link: https://dados.gov.br/dados/conjuntos-dados/destinacao-de-residuos-solidos.")
