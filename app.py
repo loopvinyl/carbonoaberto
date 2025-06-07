@@ -32,6 +32,7 @@ with col2:
 
 # === Gráfico de Emissões Mensais ===
 st.subheader("Emissões Evitadas em tCO2e por mês, sem decaimento")
+import altair as alt
 
 # Pré-processamento dos dados
 df_mensal_plot = df_mensal.copy()
