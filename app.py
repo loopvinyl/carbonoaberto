@@ -22,7 +22,7 @@ with col2:
     st.metric("💵 Receita estimada (USD)", f"US$ {receita_usd:,.2f}")
 
 # === Gráfico de Emissões Mensais ===
-st.subheader("📅 Emissões Evitadas tCO2e por mês")
+st.subheader("📅 Emissões Evitadas em tCO2e por mês")
 df_mensal_plot = df_mensal.copy()
 df_mensal_plot["Mes"] = df_mensal_plot["Mes"].astype(str).str.zfill(2)
 df_mensal_plot["AnoMes"] = df_mensal_plot["Ano"].astype(str) + "-" + df_mensal_plot["Mes"]
@@ -30,7 +30,7 @@ df_mensal_plot = df_mensal_plot.sort_values("AnoMes")
 st.line_chart(df_mensal_plot.set_index("AnoMes")["Emission Reductions (tCO2e)"])
 
 # === Gráfico de Emissões Anuais ===
-st.subheader("📈 Emissões Evitadas tCO2e por Ano")
+st.subheader("📈 Emissões Evitadas em tCO2e por Ano")
 df_anual_plot = df_anual[df_anual["Ano"].apply(lambda x: str(x).isdigit())]
 df_anual_plot = df_anual_plot.sort_values("Ano")
 st.bar_chart(df_anual_plot.set_index("Ano")["Emission Reductions (tCO2e)"])
