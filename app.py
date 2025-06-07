@@ -8,7 +8,7 @@ df_anual = pd.read_excel(arquivo, sheet_name="Anual")
 
 # === Configuração da página ===
 st.set_page_config(page_title="Dashboard de Emissões", layout="wide")
-st.title("📊 Dashboard da Iniciativa Carbono Aberto")
+st.title("Dashboard da Iniciativa Carbono Aberto")
 
 # === KPIs ===
 col1, col2 = st.columns(2)
