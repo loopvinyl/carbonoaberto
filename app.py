@@ -30,11 +30,43 @@ df_mensal_plot = df_mensal_plot.sort_values("AnoMes")
 st.line_chart(df_mensal_plot.set_index("AnoMes")["Emission Reductions (tCO2e)"])
 
 # === Gráfico de Emissões Anuais ===
+#st.subheader("Emissões Evitadas em tCO2e por Ano, com decaimento")
+#df_anual_plot = df_anual[df_anual["Ano"].apply(lambda x: str(x).isdigit())]
+#df_anual_plot = df_anual_plot.sort_values("Ano")
+#st.bar_chart(df_anual_plot.set_index("Ano")["Emission Reductions (tCO2e)"])
+##
+
+# === Gráfico de Emissões Anuais ===
 st.subheader("Emissões Evitadas em tCO2e por Ano, com decaimento")
+
+import matplotlib.pyplot as plt
+import matplotlib.ticker as ticker
+
+# Filtra e ordena os dados
 df_anual_plot = df_anual[df_anual["Ano"].apply(lambda x: str(x).isdigit())]
 df_anual_plot = df_anual_plot.sort_values("Ano")
-st.bar_chart(df_anual_plot.set_index("Ano")["Emission Reductions (tCO2e)"])
 
+# Configurações do gráfico
+fig, ax = plt.subplots(figsize=(10, 6))
+ax.bar(
+    df_anual_plot["Ano"].astype(str),  # Converte anos para string
+    df_anual_plot["Emission Reductions (tCO2e)"],
+    color='#1f77b4'
+)
+
+# Formata o eixo Y para o padrão brasileiro (pontos para milhares)
+ax.yaxis.set_major_formatter(
+    ticker.FuncFormatter(lambda x, pos: f'{x:,.0f}'.replace(',', '.'))
+)
+
+# Rótulos e título
+plt.xlabel("Ano")
+plt.ylabel("Emissões Evitadas (tCO₂e)")
+plt.title("Emissões Evitadas por Ano")
+plt.xticks(rotation=45)  # Rotaciona os anos para melhor legibilidade
+
+# Exibe o gráfico no Streamlit
+st.pyplot(fig)
 
 ##
 # === Fonte de dados ===
