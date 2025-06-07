@@ -8,18 +8,18 @@ df_anual = pd.read_excel(arquivo, sheet_name="Anual")
 
 # === Configuração da página ===
 st.set_page_config(page_title="Dashboard de Emissões", layout="wide")
-st.title("📊 Dashboard de Emissões e Créditos de Carbono")
+st.title("📊 Dashboard da Iniciativa Carbono Aberto")
 
 # === KPIs ===
 col1, col2 = st.columns(2)
 
 with col1:
     receita_brl = df_anual[df_anual["Ano"] == "Receita (BRL)"]["Emission Reductions (tCO2e)"].values[0]
-    st.metric("💰 Receita estimada (BRL)", f"R$ {receita_brl:,.2f}".replace(",", "X").replace(".", ",").replace("X", "."))
+    st.metric("💰 Receita estimada com Créditos de Carbono (BRL)", f"R$ {receita_brl:,.2f}".replace(",", "X").replace(".", ",").replace("X", "."))
 
 with col2:
     receita_usd = df_anual[df_anual["Ano"] == "Receita (USD)"]["Emission Reductions (tCO2e)"].values[0]
-    st.metric("💵 Receita estimada (USD)", f"US$ {receita_usd:,.2f}")
+    st.metric("💵 Receita estimada com Créditos de Carbono (USD)", f"US$ {receita_usd:,.2f}")
 
 # === Gráfico de Emissões Mensais ===
 st.subheader("📅 Emissões Evitadas em tCO2e por mês")
