@@ -37,26 +37,42 @@ st.line_chart(df_mensal_plot.set_index("AnoMes")["Emission Reductions (tCO2e)"])
 ##
 import altair as alt
 
-st.subheader("Emissões Evitadas em tCO2e por Ano, com decaimento")
+# Filtra e ordena os dados
 df_anual_plot = df_anual[df_anual["Ano"].apply(lambda x: str(x).isdigit())]
 df_anual_plot = df_anual_plot.sort_values("Ano")
 
-chart_anual = alt.Chart(df_anual_plot).mark_bar().encode(
+# Cria coluna com valores formatados (ponto milhar, vírgula decimal)
+df_anual_plot["ValorFormatado"] = df_anual_plot["Emission Reductions (tCO2e)"].apply(
+    lambda x: f"{x:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
+)
+
+# Gráfico com barras e tooltip
+chart_anual = alt.Chart(df_anual_plot).mark_bar(color="#4B8BBE").encode(
     x=alt.X("Ano:N", title="Ano"),
-    y=alt.Y("Emission Reductions (tCO2e):Q", title="Emissões Evitadas (tCO2e)",
-            axis=alt.Axis(format=",.2f", formatType='number')),
+    y=alt.Y("Emission Reductions (tCO2e):Q", title="Emissões Evitadas (tCO2e)"),
     tooltip=[
         alt.Tooltip("Ano:N", title="Ano"),
-        alt.Tooltip("Emission Reductions (tCO2e):Q", title="Emissões (tCO2e)", format=",.2f")
+        alt.Tooltip("ValorFormatado:N", title="Emissões (tCO2e)")
     ]
 ).properties(
     width=700,
     height=400
-).configure_axisY(
-    labelExpr="replace(replace(format(datum.value, ',.2f'), ',', 'X'), '.', ',').replace('X', '.')"
 )
 
-st.altair_chart(chart_anual, use_container_width=True)
+# Opcional: adiciona os valores formatados como texto acima das barras
+text = alt.Chart(df_anual_plot).mark_text(
+    align="center",
+    baseline="bottom",
+    dy=-5,
+    fontSize=12
+).encode(
+    x="Ano:N",
+    y="Emission Reductions (tCO2e):Q",
+    text="ValorFormatado:N"
+)
+
+# Combina gráfico de barras com os valores formatados
+st.altair_chart(chart_anual + text, use_container_width=True)
 
 ##
 # === Fonte de dados ===
