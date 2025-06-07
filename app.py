@@ -38,35 +38,39 @@ st.line_chart(df_mensal_plot.set_index("AnoMes")["Emission Reductions (tCO2e)"])
 
 # === Gráfico de Emissões Anuais ===
 st.subheader("Emissões Evitadas em tCO2e por Ano, com decaimento")
-
-import matplotlib.pyplot as plt
-import matplotlib.ticker as ticker
+import altair as alt
 
 # Filtra e ordena os dados
 df_anual_plot = df_anual[df_anual["Ano"].apply(lambda x: str(x).isdigit())]
 df_anual_plot = df_anual_plot.sort_values("Ano")
 
-# Configurações do gráfico
-fig, ax = plt.subplots(figsize=(10, 6))
-ax.bar(
-    df_anual_plot["Ano"].astype(str),  # Converte anos para string
-    df_anual_plot["Emission Reductions (tCO2e)"],
-    color='#1f77b4'
+# Formata os números para padrão brasileiro diretamente nos dados
+df_anual_plot = df_anual_plot.copy()
+df_anual_plot["Emissões Formatadas"] = df_anual_plot["Emission Reductions (tCO2e)"].apply(
+    lambda x: f"{x:,.0f}".replace(",", ".").replace(".", ",", 1)
 )
 
-# Formata o eixo Y para o padrão brasileiro (pontos para milhares)
-ax.yaxis.set_major_formatter(
-    ticker.FuncFormatter(lambda x, pos: f'{x:,.0f}'.replace(',', '.'))
+# Cria o gráfico com Altair
+chart = alt.Chart(df_anual_plot).mark_bar().encode(
+    x=alt.X('Ano:N', title='Ano', axis=alt.Axis(labelAngle=0)),
+    y=alt.Y('Emission Reductions (tCO2e):Q', title='Emissões Evitadas (tCO₂e)', 
+            axis=alt.Axis(format='.0f', labelExpr="replace(datum.label, /\\B(?=(\\d{3})+(?!\\d))/g, '.')"))
+).properties(
+    width=600,
+    height=400
 )
 
-# Rótulos e título
-plt.xlabel("Ano")
-plt.ylabel("Emissões Evitadas (tCO₂e)")
-plt.title("Emissões Evitadas por Ano")
-plt.xticks(rotation=45)  # Rotaciona os anos para melhor legibilidade
+# Adiciona rótulos
+text = chart.mark_text(
+    align='center',
+    baseline='bottom',
+    dy=-5  # Ajusta posição vertical
+).encode(
+    text='Emissões Formatadas:N'
+)
 
-# Exibe o gráfico no Streamlit
-st.pyplot(fig)
+st.altair_chart((chart + text), use_container_width=True)
+
 
 ##
 # === Fonte de dados ===
