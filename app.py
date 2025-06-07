@@ -19,7 +19,7 @@ with col1:
 
 with col2:
     receita_usd = df_anual[df_anual["Ano"] == "Receita (USD)"]["Emission Reductions (tCO2e)"].values[0]
-    st.metric("Receita estimada com Créditos de Carbono (USD)", f"US$ {receita_usd:,.2f}")
+    st.metric("💰 Receita estimada com Créditos de Carbono (USD)", f"US$ {receita_usd:,.2f}")
 
 # === Gráfico de Emissões Mensais ===
 st.subheader("Emissões Evitadas em tCO2e por mês")
