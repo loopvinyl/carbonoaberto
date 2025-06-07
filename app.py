@@ -30,10 +30,34 @@ df_mensal_plot = df_mensal_plot.sort_values("AnoMes")
 st.line_chart(df_mensal_plot.set_index("AnoMes")["Emission Reductions (tCO2e)"])
 
 # === Gráfico de Emissões Anuais ===
+#st.subheader("Emissões Evitadas em tCO2e por Ano, com decaimento")
+#df_anual_plot = df_anual[df_anual["Ano"].apply(lambda x: str(x).isdigit())]
+#df_anual_plot = df_anual_plot.sort_values("Ano")
+#st.bar_chart(df_anual_plot.set_index("Ano")["Emission Reductions (tCO2e)"])
+##
+import altair as alt
+
 st.subheader("Emissões Evitadas em tCO2e por Ano, com decaimento")
 df_anual_plot = df_anual[df_anual["Ano"].apply(lambda x: str(x).isdigit())]
 df_anual_plot = df_anual_plot.sort_values("Ano")
-st.bar_chart(df_anual_plot.set_index("Ano")["Emission Reductions (tCO2e)"])
 
+chart_anual = alt.Chart(df_anual_plot).mark_bar().encode(
+    x=alt.X("Ano:N", title="Ano"),
+    y=alt.Y("Emission Reductions (tCO2e):Q", title="Emissões Evitadas (tCO2e)",
+            axis=alt.Axis(format=",.2f", formatType='number')),
+    tooltip=[
+        alt.Tooltip("Ano:N", title="Ano"),
+        alt.Tooltip("Emission Reductions (tCO2e):Q", title="Emissões (tCO2e)", format=",.2f")
+    ]
+).properties(
+    width=700,
+    height=400
+).configure_axisY(
+    labelExpr="replace(replace(format(datum.value, ',.2f'), ',', 'X'), '.', ',').replace('X', '.')"
+)
+
+st.altair_chart(chart_anual, use_container_width=True)
+
+##
 # === Fonte de dados ===
 st.caption("Dados baseados em emissões de resíduos de poda destinados à compostagem (2019-2022), extraídos de dados abertos disponíveis em: https://dados.gov.br/dados/conjuntos-dados/destinacao-de-residuos-solidos")
