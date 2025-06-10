@@ -85,7 +85,7 @@ st.altair_chart((chart + points + text), use_container_width=True)
 ##
 
 # === Gráfico de Emissões Anuais ===
-st.subheader("Emissões Evitadas em tCO2e por Ano, com decaimento")
+st.subheader("Emissões Evitadas em tCO2e por ano, com decaimento")
 import altair as alt
 
 # Filtra e ordena os dados
