@@ -16,7 +16,7 @@ st.markdown("""
 <style>
     .audio-accessibility {
         position: fixed;
-        top: 15px;
+        top: 25px;
         right: 15px;
         z-index: 1000;
         background: rgba(255, 255, 255, 0.95);
