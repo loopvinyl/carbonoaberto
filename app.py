@@ -18,7 +18,7 @@ st.set_page_config(page_title="Carbono Aberto", layout="wide")
 st.markdown("""
 <div style='margin-bottom: 2rem;'>
   <h2 style='margin: 0;'>Carbono Aberto</h2>
-  <p style='font-size: 1.1rem; margin: 0;'>Aplicativo que contabiliza, em Reais e Dólares, os Créditos de Carbono gerados com as 'Emissões Evitadas', estimadas ao desviar resíduos com poda para compostagem no lugar da destinação aterragem.</p>
+  <p style='font-size: 1.1rem; margin: 0;'>aplicativo que contabiliza, em Reais e Dólares, os Créditos de Carbono gerados com as 'Emissões Evitadas', estimadas ao desviar resíduos com poda para compostagem no lugar da destinação aterragem.</p>
 </div>
 """, unsafe_allow_html=True)
 
