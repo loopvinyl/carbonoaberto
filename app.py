@@ -80,7 +80,7 @@ st.markdown("""
     @media (max-width: 768px) {
         .audio-accessibility {
             top: 55px;
-            right: 15px;
+            right: 14px;
             padding: 10px 15px;
         }
         .audio-label {
