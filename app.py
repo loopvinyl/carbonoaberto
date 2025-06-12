@@ -8,7 +8,7 @@ df_anual = pd.read_excel(arquivo, sheet_name="Anual")
 
 # === Configuração da página ===
 st.set_page_config(page_title="Carbono Aberto", layout="wide")
-st.title("Carbono Aberto")
+st.title("Carbono Aberto: aplicativo que calcula as 'Emissões Evitadas', ao desviar resíduos com poda para compostagem no lugar da destinação aterragem, os créditos de carbono gerados em R$ e US$")
 
 # === KPIs ===
 col1, col2 = st.columns(2)
@@ -21,7 +21,6 @@ with col2:
     receita_usd = df_anual[df_anual["Ano"] == "Receita (USD)"]["Emission Reductions (tCO2e)"].values[0]
     st.metric("💰 Receita com Créditos de Carbono (USD)", f"US$ {receita_usd:,.2f}")
 
-st.subheader("Aplicativo que calcula as Emissões Evitadas em tCO2e ao desviar resíduos com poda para compostagem, no lugar da destinação aterragem")
 
 # === Gráfico de Emissões Mensais ===
 #st.subheader("Emissões Evitadas em tCO2e por mês, sem decaimento")
