@@ -8,7 +8,7 @@ df_anual = pd.read_excel(arquivo, sheet_name="Anual")
 
 # === Configuração da página ===
 st.set_page_config(page_title="Carbono Aberto", layout="wide")
-st.title("Carbono Aberto: aplicativo que calcula as 'Emissões Evitadas', ao desviar resíduos com poda para compostagem no lugar da destinação aterragem, os créditos de carbono gerados em Reais e em Dólares")
+st.title("App Carbono Aberto: calcula 'Emissões Evitadas', ao desviar resíduos com poda para compostagem no lugar da destinação aterragem, estima os créditos de carbono gerados em Reais e Dólares")
 
 # === KPIs ===
 col1, col2 = st.columns(2)
