@@ -3,18 +3,6 @@ import streamlit as st
 import altair as alt
 ##
 
-
-# === Adicionar o player de audiodescrição ===
-st.markdown("""
-<div style="position: absolute; top: 10px; right: 10px;">
-    <audio controls>
-        <source src="https://raw.githubusercontent.com/seu-usuario/seu-repositorio/main/descricao.mp3" type="audio/mp3">
-        Seu navegador não suporta o elemento de áudio.
-    </audio>
-</div>
-""", unsafe_allow_html=True)
-
-
 ##
 # === Carrega os dados exportados ===
 arquivo = "emissoes_resultado.xlsx"  # caminho relativo para funcionar no Streamlit Cloud
