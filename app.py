@@ -84,3 +84,32 @@ st.altair_chart((chart + text), use_container_width=True)
 
 # === Fonte de dados ===
 st.caption("Dados baseados em emissões de resíduos de poda destinados à compostagem (2019-2022), extraídos de dados abertos disponíveis em: https://dados.gov.br/dados/conjuntos-dados/destinacao-de-residuos-solidos")
+
+import pandas as pd
+
+# === Tabela de Avaliação ===
+avaliacao = pd.DataFrame({
+    "Critério": [
+        "Apresentação",
+        "Inovação",
+        "Fomento à transparência e controle social",
+        "Foco em pessoas e impacto para a sociedade",
+        "Duas ou mais fontes de dados abertos",
+        "Uso de ferramentas tecnológicas",
+        "Inclusividade"
+    ],
+    "Nota (máx.)": [2, 2, 2, 2, 2, 2, 2],
+    "Nota Sugerida": [2, 2, 2, 2, 1, 1, 0],
+    "Justificativa": [
+        "Interface limpa, responsiva, com métrica visual e gráfico bem estruturado. Excelente uso do Altair",
+        "Conecta créditos de carbono com dados públicos sobre resíduos de poda – abordagem original e prática",
+        "Uso de dados abertos do governo com explicitação da fonte e visualização clara",
+        "Evidencia o impacto positivo da compostagem, tanto ambiental quanto econômico",
+        "Só uma fonte claramente identificada (dados.gov.br)",
+        "Utiliza Python, Streamlit e Altair",
+        "Texto claro e sem barreiras visuais, mas falta acessibilidade explícita"
+    ]
+})
+
+st.subheader("📋 Avaliação do Projeto")
+st.dataframe(avaliacao, use_container_width=True)
