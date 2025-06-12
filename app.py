@@ -1,6 +1,7 @@
 import pandas as pd
 import streamlit as st
 import altair as alt
+import base64
 
 # === Carrega os dados exportados ===
 arquivo = "emissoes_resultado.xlsx"  # caminho relativo para funcionar no Streamlit Cloud
@@ -10,36 +11,120 @@ df_anual = pd.read_excel(arquivo, sheet_name="Anual")
 # === Configuração da página ===
 st.set_page_config(page_title="Carbono Aberto", layout="wide")
 
-# === Player de Audiodescrição ===
+# === Player de Audiodescrição Melhorado ===
 st.markdown("""
 <style>
-    .audio-player {
+    .audio-accessibility {
         position: fixed;
-        top: 10px;
-        right: 10px;
+        top: 15px;
+        right: 15px;
         z-index: 1000;
-        background-color: #f1f3f4;
-        border-radius: 12px;
-        padding: 8px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        width: 200px;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 50px;
+        padding: 12px 20px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        border: 1px solid #e0e0e0;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(4px);
     }
+    .audio-accessibility:hover {
+        box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
+        transform: translateY(-2px);
+    }
+    .audio-accessibility button {
+        background: #2e7d32;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 42px;
+        height: 42px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+    .audio-accessibility button:hover {
+        background: #1b5e20;
+        transform: scale(1.05);
+    }
+    .audio-accessibility button:active {
+        transform: scale(0.95);
+    }
+    .audio-accessibility svg {
+        width: 24px;
+        height: 24px;
+        fill: white;
+    }
+    .audio-label {
+        font-weight: 600;
+        font-size: 15px;
+        color: #333;
+        white-space: nowrap;
+    }
+    .audio-player {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease;
+        width: 240px;
+    }
+    .audio-player.show {
+        max-height: 100px;
+        margin-top: 12px;
+    }
+    
     @media (max-width: 768px) {
-        .audio-player {
-            top: 5px;
-            right: 5px;
-            width: 180px;
+        .audio-accessibility {
+            top: 10px;
+            right: 10px;
+            padding: 10px 15px;
+        }
+        .audio-label {
+            font-size: 13px;
         }
     }
 </style>
 
-<div class="audio-player">
-    <p style="margin:0 0 5px 0; font-weight:bold; font-size:14px;">Audiodescrição</p>
-    <audio controls>
-        <source src="https://raw.githubusercontent.com/SEU_USUARIO/SEU_REPO/main/descricao.mp3" type="audio/mp3">
-        Seu navegador não suporta o elemento de áudio.
-    </audio>
+<div class="audio-accessibility" id="audioContainer">
+    <button id="audioToggle" aria-label="Controle de audiodescrição">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+        </svg>
+    </button>
+    <span class="audio-label">Audiodescrição</span>
+    <div class="audio-player" id="audioPlayer">
+        <audio controls style="width:100%">
+            <source src="https://raw.githubusercontent.com/SEU_USUARIO/SEU_REPO/main/descricao.mp3" type="audio/mp3">
+            Seu navegador não suporta o elemento de áudio.
+        </audio>
+    </div>
 </div>
+
+<script>
+    const toggleButton = document.getElementById('audioToggle');
+    const audioPlayer = document.getElementById('audioPlayer');
+    
+    toggleButton.addEventListener('click', function() {
+        audioPlayer.classList.toggle('show');
+        
+        // Atualiza o ARIA label
+        const isExpanded = audioPlayer.classList.contains('show');
+        this.setAttribute('aria-expanded', isExpanded);
+    });
+    
+    // Fecha o player ao clicar fora
+    document.addEventListener('click', function(event) {
+        const container = document.getElementById('audioContainer');
+        if (!container.contains(event.target) && audioPlayer.classList.contains('show')) {
+            audioPlayer.classList.remove('show');
+            toggleButton.setAttribute('aria-expanded', 'false');
+        }
+    });
+</script>
 """, unsafe_allow_html=True)
 
 # === Título Responsivo ===
@@ -117,8 +202,6 @@ st.altair_chart((chart + text), use_container_width=True)
 # === Fonte de dados ===
 st.caption("Dados baseados em emissões de resíduos de poda destinados à compostagem (2019-2022), extraídos de dados abertos disponíveis em: https://dados.gov.br/dados/conjuntos-dados/destinacao-de-residuos-solidos")
 
-import pandas as pd
-
 # === Tabela de Avaliação ===
 avaliacao = pd.DataFrame({
     "Critério": [
@@ -145,3 +228,12 @@ avaliacao = pd.DataFrame({
 
 st.subheader("Autoavaliação")
 st.dataframe(avaliacao, use_container_width=True)
+
+# === Adicionar nota sobre acessibilidade ===
+st.markdown("""
+<div style="margin-top: 30px; padding: 15px; background-color: #f0faf0; border-radius: 10px; border-left: 4px solid #2e7d32;">
+    <p style="margin: 0; font-size: 16px;">
+        <strong>Recurso de acessibilidade:</strong> Utilize o botão de audiodescrição no canto superior direito para ouvir a descrição completa do aplicativo, incluindo explicações sobre o gráfico e os dados apresentados.
+    </p>
+</div>
+""", unsafe_allow_html=True)
