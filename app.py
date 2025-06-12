@@ -1,9 +1,7 @@
 import pandas as pd
 import streamlit as st
 import altair as alt
-##
 
-##
 # === Carrega os dados exportados ===
 arquivo = "emissoes_resultado.xlsx"  # caminho relativo para funcionar no Streamlit Cloud
 df_mensal = pd.read_excel(arquivo, sheet_name="Mensal")
@@ -11,6 +9,38 @@ df_anual = pd.read_excel(arquivo, sheet_name="Anual")
 
 # === Configuração da página ===
 st.set_page_config(page_title="Carbono Aberto", layout="wide")
+
+# === Player de Audiodescrição ===
+st.markdown("""
+<style>
+    .audio-player {
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        z-index: 1000;
+        background-color: #f1f3f4;
+        border-radius: 12px;
+        padding: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        width: 200px;
+    }
+    @media (max-width: 768px) {
+        .audio-player {
+            top: 5px;
+            right: 5px;
+            width: 180px;
+        }
+    }
+</style>
+
+<div class="audio-player">
+    <p style="margin:0 0 5px 0; font-weight:bold; font-size:14px;">Audiodescrição</p>
+    <audio controls>
+        <source src="https://raw.githubusercontent.com/SEU_USUARIO/SEU_REPO/main/descricao.mp3" type="audio/mp3">
+        Seu navegador não suporta o elemento de áudio.
+    </audio>
+</div>
+""", unsafe_allow_html=True)
 
 # === Título Responsivo ===
 st.markdown("""
@@ -114,4 +144,4 @@ avaliacao = pd.DataFrame({
 })
 
 st.subheader("Autoavaliação")
-st.dataframe(avaliacao, use_container_width=True) 
+st.dataframe(avaliacao, use_container_width=True)
