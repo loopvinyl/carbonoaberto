@@ -1,5 +1,6 @@
 import pandas as pd
 import streamlit as st
+import altair as alt
 
 # === Carrega os dados exportados ===
 arquivo = "emissoes_resultado.xlsx"  # caminho relativo para funcionar no Streamlit Cloud
@@ -7,23 +8,35 @@ df_mensal = pd.read_excel(arquivo, sheet_name="Mensal")
 df_anual = pd.read_excel(arquivo, sheet_name="Anual")
 
 # === Configuração da página ===
-#st.set_page_config(page_title="Carbono Aberto", layout="wide")
-#st.title("Carbono Aberto: aplicativo que contabiliza, em Reais e Dólares, os Créditos de Carbono gerados com as 'Emissões Evitadas', estimadas ao desviar resíduos com poda para compostagem no lugar da destinação aterragem")
-#
-
-# === Configuração da página ===
 st.set_page_config(page_title="Carbono Aberto", layout="wide")
 
-# Título grande, subtítulo colado, espaçamento só abaixo do subtítulo
+# === Título Responsivo ===
 st.markdown("""
+<style>
+    @media (max-width: 768px) {
+        .titulo-h1 {
+            font-size: 3rem !important;
+        }
+        .titulo-p {
+            font-size: 1.2rem !important;
+        }
+    }
+    @media (min-width: 769px) {
+        .titulo-h1 {
+            font-size: 6rem !important;
+        }
+        .titulo-p {
+            font-size: 1.8rem !important;
+        }
+    }
+</style>
+
 <div style='margin-bottom: 3rem;'>
-  <h1 style='font-size: 9rem; line-height: 1.1; margin: 0;'>Carbono Aberto</h1>
-  <p style='font-size: 1.8rem; margin: 0;'>aplicativo que contabiliza, em Reais e Dólares, os Créditos de Carbono gerados com as 'Emissões Evitadas', estimadas ao desviar resíduos com poda para compostagem no lugar da destinação aterragem</p>
+  <h1 class='titulo-h1' style='line-height: 1.1; margin: 0;'>Carbono Aberto</h1>
+  <p class='titulo-p' style='margin: 0;'>aplicativo que contabiliza, em Reais e Dólares, os Créditos de Carbono gerados com as 'Emissões Evitadas', estimadas ao desviar resíduos com poda para compostagem no lugar da destinação aterragem</p>
 </div>
 """, unsafe_allow_html=True)
 
-
-#
 # === KPIs ===
 col1, col2 = st.columns(2)
 
@@ -35,17 +48,8 @@ with col2:
     receita_usd = df_anual[df_anual["Ano"] == "Receita (USD)"]["Emission Reductions (tCO2e)"].values[0]
     st.metric("💰 Receita com Créditos de Carbono (USD)", f"US$ {receita_usd:,.2f}")
 
-#
-# === Gráfico de Emissões Anuais ===
-#st.subheader("Emissões Evitadas em tCO2e por Ano, com decaimento")
-#df_anual_plot = df_anual[df_anual["Ano"].apply(lambda x: str(x).isdigit())]
-#df_anual_plot = df_anual_plot.sort_values("Ano")
-#st.bar_chart(df_anual_plot.set_index("Ano")["Emission Reductions (tCO2e)"])
-##
-
 # === Gráfico de Emissões Anuais ===
 st.subheader("Emissões Evitadas em tCO₂e por ano, com decaimento")
-import altair as alt
 
 # Filtra e ordena os dados
 df_anual_plot = df_anual[df_anual["Ano"].apply(lambda x: str(x).isdigit())]
@@ -71,13 +75,13 @@ chart = alt.Chart(df_anual_plot).mark_bar().encode(
 text = chart.mark_text(
     align='center',
     baseline='bottom',
-    dy=-5  # Ajusta posição vertical
+    dy=-5
 ).encode(
     text='Emissões Formatadas:N'
 )
 
 st.altair_chart((chart + text), use_container_width=True)
 
-# === Fonte de dados ===
-st.caption("Dados baseados em emissões de resíduos de poda destinados à compostagem (2019-2022), extraídos de dados abertos disponíveis em: https://dados.gov.br/dados/conjuntos-dados/destinacao-de-residuos-solidos")
+# === Fonte de d
+
 
