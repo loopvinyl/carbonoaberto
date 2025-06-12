@@ -33,7 +33,7 @@ st.markdown("""
 
 <div style='margin-bottom: 3rem;'>
   <h1 class='titulo-h1' style='line-height: 1.1; margin: 0;'>Carbono Aberto</h1>
-  <p class='titulo-p' style='margin: 0;'>aplicativo que contabiliza, em Reais e Dólares, os Créditos de Carbono gerados com as 'Emissões Evitadas', estimadas ao desviar resíduos com poda para compostagem no lugar da destinação aterragem</p>
+  <p class='titulo-p' style='margin: 0;'>aplicativo que contabiliza, em Reais e Dólares, os Créditos de Carbono gerados com as Emissões Evitadas, estimadas ao desviar resíduos com poda para compostagem no lugar da destinação aterragem</p>
 </div>
 """, unsafe_allow_html=True)
 
