@@ -1,7 +1,7 @@
 import pandas as pd
 import streamlit as st
 import altair as alt
-
+#
 # === Carrega os dados exportados ===
 arquivo = "emissoes_resultado.xlsx"  # caminho relativo para funcionar no Streamlit Cloud
 df_mensal = pd.read_excel(arquivo, sheet_name="Mensal")
