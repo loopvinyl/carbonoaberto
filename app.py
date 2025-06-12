@@ -78,7 +78,8 @@ text = chart.mark_text(
 
 st.altair_chart((chart + text), use_container_width=True)
 
-
+# === Fonte de dados ===
+st.caption("Dados baseados em emissões de resíduos de poda destinados à compostagem (2019-2022), extraídos de dados abertos disponíveis em: https://dados.gov.br/dados/conjuntos-dados/destinacao-de-residuos-solidos")
 
 # === Gráfico de Emissões Mensais ===
 #st.subheader("Emissões Evitadas em tCO2e por mês, sem decaimento")
