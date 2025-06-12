@@ -17,8 +17,8 @@ st.set_page_config(page_title="Carbono Aberto", layout="wide")
 # Título grande, subtítulo colado, espaçamento só abaixo do subtítulo
 st.markdown("""
 <div style='margin-bottom: 2rem;'>
-  <h1 style='font-size: 10rem; line-height: 1.1; margin: 0;'>Carbono Aberto</h1>
-  <p style='font-size: 1.5rem; margin: 0;'>aplicativo que contabiliza, em Reais e Dólares, os Créditos de Carbono gerados com as 'Emissões Evitadas', estimadas ao desviar resíduos com poda para compostagem no lugar da destinação aterragem.</p>
+  <h1 style='font-size: 9rem; line-height: 1.1; margin: 0;'>Carbono Aberto</h1>
+  <p style='font-size: 1.4rem; margin: 0;'>aplicativo que contabiliza, em Reais e Dólares, os Créditos de Carbono gerados com as 'Emissões Evitadas', estimadas ao desviar resíduos com poda para compostagem no lugar da destinação aterragem.</p>
 </div>
 """, unsafe_allow_html=True)
 
