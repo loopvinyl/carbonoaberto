@@ -112,4 +112,4 @@ avaliacao = pd.DataFrame({
 })
 
 st.subheader("📋 Avaliação do Projeto")
-st.dataframe(avaliacao, use_container_width=True)
+st.dataframe(avaliacao, use_container_width=True) 
