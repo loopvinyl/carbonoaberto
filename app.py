@@ -79,7 +79,7 @@ st.markdown("""
     
     @media (max-width: 768px) {
         .audio-accessibility {
-            top: 10px;
+            top: 55px;
             right: 10px;
             padding: 10px 15px;
         }
