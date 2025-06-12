@@ -229,11 +229,3 @@ avaliacao = pd.DataFrame({
 st.subheader("Autoavaliação")
 st.dataframe(avaliacao, use_container_width=True)
 
-# === Adicionar nota sobre acessibilidade ===
-st.markdown("""
-<div style="margin-top: 30px; padding: 15px; background-color: #f0faf0; border-radius: 10px; border-left: 4px solid #2e7d32;">
-    <p style="margin: 0; font-size: 16px;">
-        <strong>Recurso de acessibilidade:</strong> Utilize o botão de audiodescrição no canto superior direito para ouvir a descrição completa do aplicativo, incluindo explicações sobre o gráfico e os dados apresentados.
-    </p>
-</div>
-""", unsafe_allow_html=True)
