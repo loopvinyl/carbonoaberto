@@ -9,6 +9,7 @@ df_anual = pd.read_excel(arquivo, sheet_name="Anual")
 # === Configuração da página ===
 st.set_page_config(page_title="Carbono Aberto", layout="wide")
 st.title("Carbono Aberto")
+st.subheader("estima as Emissões Evitadas em tCO2e ao desviar resíduo com poda para compostagem, no lugar da destinação aterragem")
 
 # === KPIs ===
 col1, col2 = st.columns(2)
