@@ -7,9 +7,21 @@ df_mensal = pd.read_excel(arquivo, sheet_name="Mensal")
 df_anual = pd.read_excel(arquivo, sheet_name="Anual")
 
 # === Configuração da página ===
-st.set_page_config(page_title="Carbono Aberto", layout="wide")
-st.title("Carbono Aberto: aplicativo que contabiliza, em Reais e Dólares, os Créditos de Carbono gerados com as 'Emissões Evitadas', estimadas ao desviar resíduos com poda para compostagem no lugar da destinação aterragem")
+#st.set_page_config(page_title="Carbono Aberto", layout="wide")
+#st.title("Carbono Aberto: aplicativo que contabiliza, em Reais e Dólares, os Créditos de Carbono gerados com as 'Emissões Evitadas', estimadas ao desviar resíduos com poda para compostagem no lugar da destinação aterragem")
+#
 
+# === Configuração da página ===
+st.set_page_config(page_title="Carbono Aberto", layout="wide")
+
+# Título e subtítulo estilizados
+st.markdown("""
+<h1 style='margin-bottom:0.3rem;'>Carbono Aberto</h1>
+<p style='font-size:0.95rem; margin-top:0;'>Aplicativo que contabiliza, em Reais e Dólares, os Créditos de Carbono gerados com as 'Emissões Evitadas', estimadas ao desviar resíduos com poda para compostagem no lugar da destinação aterragem.</p>
+""", unsafe_allow_html=True)
+
+
+#
 # === KPIs ===
 col1, col2 = st.columns(2)
 
