@@ -44,7 +44,7 @@ with col2:
 ##
 
 # === Gráfico de Emissões Anuais ===
-st.subheader("Emissões Evitadas em tCO2e por ano, com decaimento")
+st.subheader("Emissões Evitadas em tCO₂e por ano, com decaimento")
 import altair as alt
 
 # Filtra e ordena os dados
