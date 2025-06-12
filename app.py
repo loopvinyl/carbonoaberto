@@ -14,10 +14,12 @@ df_anual = pd.read_excel(arquivo, sheet_name="Anual")
 # === Configuração da página ===
 st.set_page_config(page_title="Carbono Aberto", layout="wide")
 
-# Título e subtítulo estilizados
+# Título menor e subtítulo com fonte maior, bem próximos
 st.markdown("""
-<h1 style='margin-bottom:0.3rem;'>Carbono Aberto</h1>
-<p style='font-size:0.95rem; margin-top:0;'>Aplicativo que contabiliza, em Reais e Dólares, os Créditos de Carbono gerados com as 'Emissões Evitadas', estimadas ao desviar resíduos com poda para compostagem no lugar da destinação aterragem.</p>
+<h2 style='margin-bottom:0.05rem;'>Carbono Aberto</h2>
+<p style='font-size:1.1rem; margin-top:0rem;'>
+Aplicativo que contabiliza, em Reais e Dólares, os Créditos de Carbono gerados com as 'Emissões Evitadas', estimadas ao desviar resíduos com poda para compostagem no lugar da destinação aterragem.
+</p>
 """, unsafe_allow_html=True)
 
 
