@@ -1,7 +1,7 @@
 import pandas as pd
 import streamlit as st
 import altair as alt
-#
+
 # === Carrega os dados exportados ===
 arquivo = "emissoes_resultado.xlsx"  # caminho relativo para funcionar no Streamlit Cloud
 df_mensal = pd.read_excel(arquivo, sheet_name="Mensal")
@@ -82,6 +82,5 @@ text = chart.mark_text(
 
 st.altair_chart((chart + text), use_container_width=True)
 
-# === Fonte de d
-
-
+# === Fonte de dados ===
+st.caption("Dados baseados em emissões de resíduos de poda destinados à compostagem (2019-2022), extraídos de dados abertos disponíveis em: https://dados.gov.br/dados/conjuntos-dados/destinacao-de-residuos-solidos")
