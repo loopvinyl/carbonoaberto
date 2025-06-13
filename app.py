@@ -12,6 +12,7 @@ df_anual = pd.read_excel(arquivo, sheet_name="Anual")
 st.set_page_config(page_title="Carbono Aberto", layout="wide")
 
 # === Player de Audiodescrição Melhorado ===
+# Mantém a estilização e o rótulo na caixa flutuante
 st.markdown("""
 <style>
     .audio-accessibility {
@@ -34,31 +35,9 @@ st.markdown("""
         box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
         transform: translateY(-2px);
     }
+    /* Oculta o botão customizado que você tinha no HTML, pois o player do st.audio já tem controles */
     .audio-accessibility button {
-        background: #2e7d32;
-        color: white;
-        border: none;
-        border-radius: 50%;
-        width: 42px;
-        height: 42px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    }
-    .audio-accessibility button:hover {
-        background: #1b5e20;
-        transform: scale(1.05);
-    }
-    .audio-accessibility button:active {
-        transform: scale(0.95);
-    }
-    .audio-accessibility svg {
-        width: 24px;
-        height: 24px;
-        fill: white;
+        display: none; /* Oculta o botão do SVG */
     }
     .audio-label {
         font-weight: 600;
@@ -66,6 +45,7 @@ st.markdown("""
         color: #333;
         white-space: nowrap;
     }
+    /* O player do st.audio não será afetado diretamente por estas classes de show/hide */
     .audio-player {
         max-height: 0;
         overflow: hidden;
@@ -90,42 +70,40 @@ st.markdown("""
 </style>
 
 <div class="audio-accessibility" id="audioContainer">
-    <button id="audioToggle" aria-label="Controle de audiodescrição">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
-        </svg>
-    </button>
     <span class="audio-label">Audiodescrição</span>
-    <div class="audio-player" id="audioPlayer">
-        <audio controls style="width:100%">
-            <source src="https://drive.google.com/uc?export=download&id=1biX6lZtU9aob09DV__AOzQU18yIJrRq6" type="audio/mp3">
-            Seu navegador não suporta o elemento de áudio.
-        </audio>
     </div>
-</div>
 
 <script>
+    // Se você não tiver outro elemento para 'audioToggle' ou 'audioPlayer', este script pode ser removido
     const toggleButton = document.getElementById('audioToggle');
     const audioPlayer = document.getElementById('audioPlayer');
     
-    toggleButton.addEventListener('click', function() {
-        audioPlayer.classList.toggle('show');
+    if (toggleButton && audioPlayer) { // Verifica se os elementos existem antes de tentar manipulá-los
+        toggleButton.addEventListener('click', function() {
+            audioPlayer.classList.toggle('show');
+            const isExpanded = audioPlayer.classList.contains('show');
+            this.setAttribute('aria-expanded', isExpanded);
+        });
         
-        // Atualiza o ARIA label
-        const isExpanded = audioPlayer.classList.contains('show');
-        this.setAttribute('aria-expanded', isExpanded);
-    });
-    
-    // Fecha o player ao clicar fora
-    document.addEventListener('click', function(event) {
-        const container = document.getElementById('audioContainer');
-        if (!container.contains(event.target) && audioPlayer.classList.contains('show')) {
-            audioPlayer.classList.remove('show');
-            toggleButton.setAttribute('aria-expanded', 'false');
-        }
-    });
+        document.addEventListener('click', function(event) {
+            const container = document.getElementById('audioContainer');
+            if (!container.contains(event.target) && audioPlayer.classList.contains('show')) {
+                audioPlayer.classList.remove('show');
+                toggleButton.setAttribute('aria-expanded', 'false');
+            }
+        });
+    }
 </script>
 """, unsafe_allow_html=True)
+
+# Adiciona o player de áudio do Streamlit logo após a caixa flutuante do rótulo
+# O arquivo 'descricao.mp3' DEVE estar no mesmo diretório do seu script Python no GitHub
+try:
+    audio_file = open('descricao.mp3', 'rb') # Abre o arquivo em modo binário
+    audio_bytes = audio_file.read()          # Lê os bytes do arquivo
+    st.audio(audio_bytes, format='audio/mp3', start_time=0) # Adiciona o componente de áudio
+except FileNotFoundError:
+    st.error("Arquivo de audiodescrição 'descricao.mp3' não encontrado. Certifique-se de que ele está no mesmo diretório do seu script no GitHub.")
 
 # === Título Responsivo ===
 st.markdown("""
@@ -181,7 +159,7 @@ df_anual_plot["Emissões Formatadas"] = df_anual_plot["Emission Reductions (tCO2
 # Cria o gráfico com Altair
 chart = alt.Chart(df_anual_plot).mark_bar().encode(
     x=alt.X('Ano:N', title='Ano', axis=alt.Axis(labelAngle=0)),
-    y=alt.Y('Emission Reductions (tCO2e):Q', title='Emissões Evitadas (tCO₂e)', 
+    y=alt.Y('Emission Reductions (tCO2e):Q', title='Emissões Evitadas (tCO₂e)',
             axis=alt.Axis(format='.0f', labelExpr="replace(datum.label, /\\B(?=(\\d{3})+(?!\\d))/g, '.')"))
 ).properties(
     width=600,
@@ -228,4 +206,3 @@ avaliacao = pd.DataFrame({
 
 st.subheader("Autoavaliação")
 st.dataframe(avaliacao, use_container_width=True)
-
