@@ -98,7 +98,7 @@ st.markdown("""
     <span class="audio-label">Audiodescrição</span>
     <div class="audio-player" id="audioPlayer">
         <audio controls style="width:100%">
-            <source src="https://github.com/loopvinyl/carbonoaberto/raw/main/descricao.mp3" type="audio/mpeg">
+            <source src="https://github.com/loopvinyl/carbonoaberto/raw/main/descricao.mp3" type="audio/mp3">
             Seu navegador não suporta o elemento de áudio.
         </audio>
     </div>
