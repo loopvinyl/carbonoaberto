@@ -194,7 +194,7 @@ avaliacao = pd.DataFrame({
     "Nota (máx.)": [2, 2, 2, 2, 2, 2, 2],
     "Nota Sugerida": [2, 2, 2, 2, 1, 2, 2],
     "Justificativa": [
-        "Interface limpa, responsiva, com métrica visual e gráfico bem estruturado. Excelente uso do Altair",
+        "Interface limpa, responsiva, com métrica visual e gráfico bem estruturado",
         "Conecta créditos de carbono com dados públicos sobre resíduos de poda – abordagem original e prática",
         "Uso de dados abertos do governo com explicitação da fonte e visualização clara",
         "Evidencia o impacto positivo da compostagem, tanto ambiental quanto econômico",
