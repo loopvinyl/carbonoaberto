@@ -198,7 +198,7 @@ avaliacao = pd.DataFrame({
         "Conecta créditos de carbono com dados públicos sobre resíduos de poda, abordagem original e prática",
         "Uso de dados abertos do governo com explicitação da fonte e visualização clara",
         "Evidencia o impacto positivo da compostagem, tanto ambiental quanto econômico",
-        "Só uma fonte claramente identificada (dados.gov.br)",
+        "Só uma fonte claramente identificada",
         "Utiliza Python, Streamlit e Altair",
         "Texto claro, sem barreiras visuais e com audiodescrição"
     ]
